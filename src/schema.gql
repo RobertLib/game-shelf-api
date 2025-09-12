@@ -1,0 +1,105 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Authorization {
+  canCreateUser: PolicyResultType!
+  canIndexUsers: PolicyResultType!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Mutation {
+  userCreate(input: UserCreateInput!): User!
+  userDestroy(input: UserDestroyInput!): User!
+  userUpdate(input: UserUpdateInput!): User!
+}
+
+type PageInfo {
+  endCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+}
+
+type PolicyResultType {
+  message: String
+  value: Boolean!
+}
+
+type Query {
+  authorization: Authorization!
+  me: User!
+  user(id: String!): User
+  users(after: String, before: String, filter: UserFilterInput, first: Int = 10, last: Int, sort: UserSortInput): UserConnection!
+}
+
+"""Sort order"""
+enum SortOrder {
+  ASC
+  DESC
+}
+
+type User {
+  canDestroy: PolicyResultType!
+  canShow: PolicyResultType!
+  canUpdate: PolicyResultType!
+  createdAt: DateTime!
+  email: String!
+  id: String!
+  isVerified: Boolean!
+  role: UserRole!
+  updatedAt: DateTime!
+}
+
+type UserConnection {
+  edges: [UserEdge!]!
+  nodes: [User!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+input UserCreateInput {
+  email: String!
+  isVerified: Boolean
+  password: String!
+  role: UserRole = USER
+  verificationToken: String
+}
+
+input UserDestroyInput {
+  id: String!
+}
+
+type UserEdge {
+  cursor: String!
+  node: User!
+}
+
+input UserFilterInput {
+  email: String
+}
+
+"""User role"""
+enum UserRole {
+  ADMIN
+  USER
+}
+
+input UserSortInput {
+  email: SortOrder
+}
+
+input UserUpdateInput {
+  email: String
+  id: String!
+  isVerified: Boolean
+  password: String
+  resetPasswordExpires: DateTime
+  resetPasswordToken: String
+  role: UserRole
+  verificationToken: String
+}
